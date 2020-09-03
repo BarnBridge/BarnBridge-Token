@@ -6,15 +6,20 @@ use(require('chai-bignumber')());
 
 describe("BarnBridgeToken", function() {
   let token;
+  let financeMock;
 
   beforeEach(async function() {
     const Token = await ethers.getContractFactory("BarnBridgeToken")
-    token = await Token.deploy()
+    const FinanceMock = await ethers.getContractFactory("FinanceMock")
 
+    financeMock = await FinanceMock.deploy()
+    await financeMock.deployed()
+
+    token = await Token.deploy(financeMock.address)
     await token.deployed(); 
   })
 
-  it('can deploy', async function() {
+  it('Can deploy successfully', async function() {
     expect(token.address).to.not.equal(0)
   })
 
@@ -27,9 +32,22 @@ describe("BarnBridgeToken", function() {
   })
 
   it("Mints 10MM tokens", async function() {
+    // todo: make this prettier
     let actual = new BigNumber((await token.totalSupply()).toString())
     let expected = new BigNumber('1e25');
 
     expect(actual).to.be.bignumber.equal(expected)
+  })
+
+  it("Approves Finance contract", async function() {
+    let actual = new BigNumber((await token.allowance(token.address, financeMock.address)).toString())
+    let expected = new BigNumber('1e25');
+
+    expect(actual).to.be.bignumber.equal(expected)
+  }); 
+
+
+  it("Calls Finance.deposit", async function() {
+    expect(await financeMock.depositCalled()).to.be.true
   })
 });
