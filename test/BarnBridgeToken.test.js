@@ -32,16 +32,15 @@ describe("BarnBridgeToken", function() {
   })
 
   it("Mints 10MM tokens", async function() {
-    // todo: make this prettier
-    let actual = new BigNumber((await token.totalSupply()).toString())
-    let expected = new BigNumber('1e25');
+    let actual = new BigNumber((await token.totalSupply()).toString());
+    let expected = new BigNumber('10000000').times(new BigNumber('10').pow(18));
 
     expect(actual).to.be.bignumber.equal(expected)
   })
 
   it("Approves Finance contract", async function() {
     let actual = new BigNumber((await token.allowance(token.address, financeMock.address)).toString())
-    let expected = new BigNumber('1e25');
+    let expected = new BigNumber('10000000').times(new BigNumber('10').pow(18));
 
     expect(actual).to.be.bignumber.equal(expected)
   }); 
