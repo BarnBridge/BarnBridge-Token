@@ -7,7 +7,12 @@ import "./IFinance.sol";
 contract AragonDepositor {
     uint256 constant private SUPPLY = 10000000 * 10**18;
 
-    function execute(ERC20 token, IFinance finance) public {
+    function execute(
+        ERC20 token,
+        IFinance finance
+    )
+        public
+    {
         // Approve finance for maximum possible uint
         token.approve(address(finance), SUPPLY);
 
