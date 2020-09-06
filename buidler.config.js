@@ -15,12 +15,9 @@ task('accounts', 'Prints the list of accounts', async () => {
     }
 })
 
-// You have to export an object to set up your config
-// This object can have the following optional entries:
-// defaultNetwork, networks, solc, and paths.
-// Go to https://buidler.dev/config/ to learn more
+// Some of the settings should be defined in `./config.js`.
+// Go to https://buidler.dev/config/ for the syntax.
 module.exports = {
-    // This is a sample solc configuration that specifies which version of solc to use
     solc: {
         version: '0.6.12',
         optimizer: {
@@ -31,12 +28,6 @@ module.exports = {
 
     defaultNetwork: "buidlerevm",
 
-    networks: {
-        coverage: {
-            url: 'http://localhost:8555'
-        },
-        rinkeby: config.networks.rinkeby,
-        mainnet: config.networks.mainnet,
-    },
+    networks: config.networks,
     etherscan: config.etherscan,
 }
