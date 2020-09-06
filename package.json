@@ -15,9 +15,10 @@
   "author": "BarnBridge",
   "license": "Apache-2",
   "devDependencies": {
-    "@nomiclabs/buidler": "^1.4.4",
+    "@nomiclabs/buidler": "^1.4.5",
     "@nomiclabs/buidler-ethers": "^2.0.0",
-    "@nomiclabs/buidler-waffle": "^2.0.0",
+    "@nomiclabs/buidler-etherscan": "^2.0.1",
+    "@nomiclabs/buidler-waffle": "^2.1.0",
     "@openzeppelin/contracts": "^3.1.0",
     "bignumber.js": "^9.0.0",
     "buidler-gas-reporter": "^0.1.3",
@@ -31,7 +32,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "ethereum-waffle": "^3.1.0",
-    "ethers": "^5.0.9",
+    "ethers": "^5.0.10",
     "solhint": "^3.2.0",
     "solidity-coverage": "^0.7.10"
   }

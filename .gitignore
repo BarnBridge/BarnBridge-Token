@@ -7,3 +7,6 @@ artifacts
 # Coverage
 coverage
 coverage.json
+
+# Local settings
+config.js
