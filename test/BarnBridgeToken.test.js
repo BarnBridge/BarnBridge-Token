@@ -6,23 +6,23 @@ use(require('chai-bignumber')())
 
 describe('BarnBridgeToken', function () {
     let token
-    let financeMock
+
+    let aragonDepositor
+
     const tokenName = 'BarnBridge Governance Token'
     const tokenSymbol = 'BOND'
     const mintTokens = new BigNumber(10000000 * Math.pow(10, 18))
 
     beforeEach(async function () {
+        const accounts = await ethers.getSigners()
+        aragonDepositor = accounts[0]
+
         const Token = await ethers.getContractFactory('BarnBridgeToken')
-        const FinanceMock = await ethers.getContractFactory('FinanceMock')
-
-        financeMock = await FinanceMock.deploy()
-        await financeMock.deployed()
-
-        token = await Token.deploy(financeMock.address)
+        token = await Token.deploy(await aragonDepositor.getAddress())
         await token.deployed()
     })
 
-    it('Can deploy successfully', async function () {
+    it('Deploys successfully', async function () {
         expect(token.address).to.not.equal(0)
     })
 
@@ -40,13 +40,11 @@ describe('BarnBridgeToken', function () {
         expect(actual).to.be.bignumber.equal(mintTokens)
     })
 
-    it('Approves Finance contract for the full amount of tokens', async function () {
-        const actual = new BigNumber((await token.allowance(token.address, financeMock.address)).toString())
-
-        expect(actual).to.be.bignumber.equal(mintTokens)
-    })
-
-    it('Calls Finance.deposit on deploy', async function () {
-        expect(await financeMock.depositCalled()).to.be.true
+    it('Sends the initial minted tokens to aragon depositor', async function () {
+        expect(
+            new BigNumber(
+                (await token.balanceOf(await aragonDepositor.getAddress())).toString(),
+            ),
+        ).to.be.bignumber.equal(mintTokens)
     })
 })

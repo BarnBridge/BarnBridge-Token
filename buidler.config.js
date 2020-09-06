@@ -1,4 +1,7 @@
+const config = require('./config')
+
 usePlugin('@nomiclabs/buidler-waffle')
+usePlugin("@nomiclabs/buidler-etherscan");
 usePlugin('buidler-gas-reporter')
 usePlugin('solidity-coverage')
 
@@ -26,9 +29,14 @@ module.exports = {
         },
     },
 
+    defaultNetwork: "buidlerevm",
+
     networks: {
         coverage: {
             url: 'http://localhost:8555'
-        }
+        },
+        rinkeby: config.networks.rinkeby,
+        mainnet: config.networks.mainnet,
     },
+    etherscan: config.etherscan,
 }
