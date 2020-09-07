@@ -7,7 +7,7 @@ module.exports = {
 
         // Rinkeby
         rinkeby: {
-            url: 'https://mainnet.infura.io/v3/YOUR-INFURA-API-KEY',
+            url: 'https://rinkeby.infura.io/v3/YOUR-INFURA-API-KEY',
             chainId: 4,
             accounts: {
                 mnemonic: 'YOUR MNEMONIC HERE',
