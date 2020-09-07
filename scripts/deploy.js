@@ -16,7 +16,7 @@ async function main () {
     // Run execute on AragonDepositor with
     // - Token address
     // - Finance address
-    const finance = '0x9e845029e3f0cbb47e3d1ac175bf26a6087c7ac7'
+    const finance = '0x3bc45731f72ecc4f41b864588d77f0852e2cf7e8'
     await aragonDepositor.execute(
         token.address,
         finance,
