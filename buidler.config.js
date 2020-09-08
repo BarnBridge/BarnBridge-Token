@@ -1,8 +1,7 @@
 const config = require('./config')
 
 usePlugin('@nomiclabs/buidler-waffle')
-usePlugin("@nomiclabs/buidler-etherscan");
-usePlugin('buidler-gas-reporter')
+usePlugin('@nomiclabs/buidler-etherscan')
 usePlugin('solidity-coverage')
 
 // This is a sample Buidler task. To learn how to create your own go to
@@ -26,7 +25,7 @@ module.exports = {
         },
     },
 
-    defaultNetwork: "buidlerevm",
+    defaultNetwork: 'buidlerevm',
 
     networks: config.networks,
     etherscan: config.etherscan,
