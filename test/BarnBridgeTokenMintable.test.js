@@ -30,16 +30,25 @@ describe('BarnBridgeTokenMintable', function () {
     })
 
     it('Owner mints 10MM tokens', async function () {
-        const [owner] = await ethers.getSigners();
+        const [owner, user] = await ethers.getSigners();
         ownerAddress = await owner.getAddress()
+        userAddress = await user.getAddress()
 
         await token.mint(ownerAddress, mintTokens)
 
         const ownerBalance = await token.balanceOf(ownerAddress);
-        expect(await token.totalSupply()).to.equal(ownerBalance);
+        expect(ownerBalance).to.equal(mintTokens);
 
-        const actual = await token.totalSupply()
-        expect(actual).to.be.equal(mintTokens)
+        const totalSupply = await token.totalSupply()
+        expect(totalSupply).to.be.equal(mintTokens)
+
+        await token.mint(userAddress, mintTokens)
+
+        const userBalance = await token.balanceOf(userAddress);
+        expect(userBalance).to.equal(mintTokens);
+
+        const totalSupply2 = await token.totalSupply()
+        expect(totalSupply2).to.be.equal(mintTokens.mul(2))
     })
 
     it('Only owner can mint', async function () {
