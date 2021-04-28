@@ -5,8 +5,6 @@ import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract BarnBridgeTokenMintable is ERC20Burnable, Ownable {
-    uint256 constant private SUPPLY = 10000000 * 10**18;
-
     constructor() 
         public         
         ERC20(

@@ -1,15 +1,12 @@
 const { expect, use } = require('chai')
 const { ethers } = require('@nomiclabs/buidler')
-const { BigNumber } = require('bignumber.js')
-
-use(require('chai-bignumber')())
 
 describe('BarnBridgeTokenMintable', function () {
     let token
 
     const tokenName = 'BarnBridge Governance Token'
     const tokenSymbol = 'BOND'
-    const mintTokens = new BigNumber(10000000 * Math.pow(10, 18))
+    const mintTokens = ethers.BigNumber.from(10000000).mul(ethers.BigNumber.from(10).pow(18))
 
     beforeEach(async function () {
         const accounts = await ethers.getSigners()
@@ -32,16 +29,28 @@ describe('BarnBridgeTokenMintable', function () {
         expect(await token.symbol()).to.equal(tokenSymbol)
     })
 
-    it('Mints 10MM tokens', async function () {
+    it('Owner mints 10MM tokens', async function () {
         const [owner] = await ethers.getSigners();
+        ownerAddress = await owner.getAddress()
 
-        await token.mint(await owner.getAddress(), mintTokens)
+        await token.mint(ownerAddress, mintTokens)
 
-        const actual = new BigNumber((await token.totalSupply()).toString())
+        const ownerBalance = await token.balanceOf(ownerAddress);
+        expect(await token.totalSupply()).to.equal(ownerBalance);
 
-        expect(actual).to.be.bignumber.equal(mintTokens)
+        const actual = await token.totalSupply()
+        expect(actual).to.be.equal(mintTokens)
     })
 
+    it('Only owner can mint', async function () {
+        const [owner, signer] = await ethers.getSigners();
+        signerAddress = await signer.getAddress()
+
+        await expect(token.connect(signer).mint(await signerAddress, mintTokens)).to.be.revertedWith("Ownable: caller is not the owner");
+
+        // const actual = await token.totalSupply()
+        // expect(actual).to.be.equal(mintTokens)
+    })
     // it('Sends the initial minted tokens to aragon depositor', async function () {
     //     expect(
     //         new BigNumber(
