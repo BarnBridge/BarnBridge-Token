@@ -48,14 +48,5 @@ describe('BarnBridgeTokenMintable', function () {
 
         await expect(token.connect(signer).mint(await signerAddress, mintTokens)).to.be.revertedWith("Ownable: caller is not the owner");
 
-        // const actual = await token.totalSupply()
-        // expect(actual).to.be.equal(mintTokens)
     })
-    // it('Sends the initial minted tokens to aragon depositor', async function () {
-    //     expect(
-    //         new BigNumber(
-    //             (await token.balanceOf(await aragonDepositor.getAddress())).toString(),
-    //         ),
-    //     ).to.be.bignumber.equal(mintTokens)
-    // })
 })
