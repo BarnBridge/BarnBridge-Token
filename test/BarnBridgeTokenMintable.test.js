@@ -29,7 +29,7 @@ describe('BarnBridgeTokenMintable', function () {
         expect(await token.symbol()).to.equal(tokenSymbol)
     })
 
-    it('Owner mints 10MM tokens', async function () {
+    it('Owner mints tokens', async function () {
         const [owner, user] = await ethers.getSigners();
         ownerAddress = await owner.getAddress()
         userAddress = await user.getAddress()
